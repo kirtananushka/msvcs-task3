@@ -45,4 +45,10 @@ public class SongController {
         Map<String, List<Long>> response = Collections.singletonMap("ids", deletedIds);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAllSongs() {
+        songService.deleteAllSongs();
+        return ResponseEntity.noContent().build();
+    }
 }

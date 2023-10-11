@@ -46,6 +46,11 @@ public class SongService {
         return existingIds;
     }
 
+    @Transactional
+    public void deleteAllSongs() {
+        songRepository.deleteAll();
+    }
+
     private void validateSongExistence(Integer id) {
         if (!songRepository.existsById(Long.valueOf(id))) {
             throw new SongServiceException(String.format("Song with ID=%d not found", id), "404");

@@ -67,7 +67,7 @@ class ResourceControllerIntegrationTest {
 
         SongIdResponse songIdResponse = new SongIdResponse();
         songIdResponse.setId(1);
-        when(songClient.postMetadata(any(SongRequest.class))).thenReturn(songIdResponse);
+        when(songClient.saveMetadata(any(SongRequest.class))).thenReturn(songIdResponse);
 
         ResourceResponse response = resourceService.saveResource(audioData);
 

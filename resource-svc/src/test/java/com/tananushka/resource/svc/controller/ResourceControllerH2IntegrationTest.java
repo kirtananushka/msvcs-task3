@@ -62,7 +62,7 @@ class ResourceControllerH2IntegrationTest {
 
         SongIdResponse songIdResponse = new SongIdResponse();
         songIdResponse.setId(1);
-        when(songClient.postMetadata(any(SongRequest.class))).thenReturn(songIdResponse);
+        when(songClient.saveMetadata(any(SongRequest.class))).thenReturn(songIdResponse);
 
         MvcResult mvcResult = mockMvc.perform(post("/resources")
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)

@@ -45,7 +45,7 @@ public class ResourceService {
         SongRequest songRequest = resourceMapper.toRequest(savedResource.getId(), metadata);
         log.debug("SongRequest: {}", songRequest);
 
-        SongIdResponse songIdResponse = songClient.postMetadata(songRequest);
+        SongIdResponse songIdResponse = songClient.saveMetadata(songRequest);
         log.debug("SongIdResponse: {}", songIdResponse);
 
         return resourceMapper.toResponse(savedResource);
@@ -64,6 +64,12 @@ public class ResourceService {
         List<Long> existingIds = validateResourceExistence(ids);
         resourceRepository.deleteByIdIn(existingIds);
         return existingIds;
+    }
+
+    @Transactional
+    public void deleteAll() {
+        songClient.deleteAll();
+        resourceRepository.deleteAll();
     }
 
     private Metadata getMetadata(byte[] audioData) {

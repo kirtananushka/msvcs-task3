@@ -46,4 +46,10 @@ public class ResourceController {
         Map<String, List<Long>> response = Collections.singletonMap("ids", deletedIds);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAllResources() {
+        resourceService.deleteAll();
+        return ResponseEntity.noContent().build();
+    }
 }

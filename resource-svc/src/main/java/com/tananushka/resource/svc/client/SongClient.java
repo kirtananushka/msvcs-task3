@@ -21,8 +21,13 @@ public class SongClient {
         this.restTemplate = new RestTemplate();
     }
 
-    public SongIdResponse postMetadata(SongRequest songRequest) {
+    public SongIdResponse saveMetadata(SongRequest songRequest) {
         String endpointUrl = baseUrl + songsEndpoint;
         return restTemplate.postForObject(endpointUrl, songRequest, SongIdResponse.class);
+    }
+
+    public void deleteAll() {
+        String endpointUrl = baseUrl + songsEndpoint + "/all";
+        restTemplate.delete(endpointUrl);
     }
 }

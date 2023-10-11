@@ -60,7 +60,7 @@ class ResourceServiceTest {
 
         when(resourceRepository.save(any(Resource.class))).thenReturn(savedResource);
         when(resourceMapper.toRequest(anyLong(), any())).thenReturn(songRequest);
-        when(songClient.postMetadata(any(SongRequest.class))).thenReturn(songIdResponse);
+        when(songClient.saveMetadata(any(SongRequest.class))).thenReturn(songIdResponse);
         when(resourceMapper.toResponse(any(Resource.class))).thenReturn(expectedResponse);
 
         ResourceResponse actualResponse = resourceService.saveResource(audioData);
@@ -68,7 +68,7 @@ class ResourceServiceTest {
         assertEquals(expectedResponse, actualResponse);
 
         verify(resourceRepository).save(any(Resource.class));
-        verify(songClient).postMetadata(any(SongRequest.class));
+        verify(songClient).saveMetadata(any(SongRequest.class));
     }
 
     @Test

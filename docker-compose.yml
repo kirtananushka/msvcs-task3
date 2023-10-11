@@ -1,14 +1,15 @@
 version: '3'
 services:
   postgres:
-    image: postgres
+    image: postgres:alpine
     container_name: postgres
     environment:
-      POSTGRES_PASSWORD: "1111"
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - ./postgres_db_vol:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
     restart: unless-stopped
 
   resource-svc:
@@ -18,14 +19,15 @@ services:
     image: resource-svc
     container_name: resource-svc
     environment:
-      DB_HOST: "postgres"
-      DB_USERNAME: "postgres"
-      DB_PASSWORD: "1111"
+      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       SONG_SVC: "song-svc"
     ports:
       - "8071:8071"
     depends_on:
       - postgres
+      - song-svc
     restart: unless-stopped
 
   song-svc:
@@ -35,9 +37,9 @@ services:
     image: song-svc
     container_name: song-svc
     environment:
-      DB_HOST: "postgres"
-      DB_USERNAME: "postgres"
-      DB_PASSWORD: "1111"
+      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     ports:
       - "8072:8072"
     depends_on:
