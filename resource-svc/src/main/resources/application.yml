@@ -1,0 +1,24 @@
+server:
+  port: 8071
+
+app:
+  name: resource-svc
+
+logging:
+  level:
+    com.tananushka.resource.svc: DEBUG
+    root: INFO
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://${DB_HOST}:5432/resource_svc_db"
+    username: "${DB_USERNAME}"
+    password: "${DB_PASSWORD}"
+  jpa:
+    properties:
+      hibernate:
+        dialect=org.hibernate.dialect.PostgreSQLDialect
+svc:
+  song:
+    base-url: "http://${SONG_SVC}:8072"
+    songs-endpoint: "/songs"

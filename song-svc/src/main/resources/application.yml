@@ -1,0 +1,21 @@
+server:
+  port: 8072
+
+app:
+  name: song-svc
+
+logging:
+  level:
+    com.tananushka.song.svc: DEBUG
+    root: INFO
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://${DB_HOST}:5432/song_svc_db"
+    username: "${DB_USERNAME}"
+    password: "${DB_PASSWORD}"
+  jpa:
+    properties:
+      hibernate:
+        dialect=org.hibernate.dialect.PostgreSQLDialect
+
