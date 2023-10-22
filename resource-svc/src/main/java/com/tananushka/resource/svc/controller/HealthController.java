@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class HealthController {
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
     @GetMapping

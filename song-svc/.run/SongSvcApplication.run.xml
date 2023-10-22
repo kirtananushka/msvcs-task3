@@ -4,6 +4,7 @@
       <env name="DB_HOST" value="localhost" />
       <env name="DB_USERNAME" value="postgres" />
       <env name="DB_PASSWORD" value="1111" />
+      <env name="EUREKA_CLIENT_SERVICEURL_DEFAULTZONE" value="http://localhost:8761/eureka/" />
     </envs>
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <module name="song-svc" />

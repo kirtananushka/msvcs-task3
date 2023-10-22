@@ -1,8 +1,18 @@
 version: '3'
 services:
+  eureka-server:
+    build:
+      context: ./eureka-svc
+      dockerfile: Dockerfile
+    image: eureka-server
+    environment:
+      HOSTNAME: eureka-server
+    ports:
+      - "8761:8761"
+    restart: unless-stopped
+
   postgres:
     image: postgres:alpine
-    container_name: postgres
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
@@ -17,17 +27,17 @@ services:
       context: ./resource-svc
       dockerfile: Dockerfile
     image: resource-svc
-    container_name: resource-svc
     environment:
       DB_HOST: ${DB_HOST}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      SONG_SVC: "song-svc"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     ports:
       - "8071:8071"
     depends_on:
       - postgres
       - song-svc
+      - eureka-server
     restart: unless-stopped
 
   song-svc:
@@ -35,13 +45,17 @@ services:
       context: ./song-svc
       dockerfile: Dockerfile
     image: song-svc
-    container_name: song-svc
     environment:
       DB_HOST: ${DB_HOST}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     ports:
-      - "8072:8072"
+      - "8072-8073:8072"
     depends_on:
       - postgres
+      - eureka-server
     restart: unless-stopped
+
+# run 2 instances of song-svc:
+# docker compose up -d --scale song-svc=2
